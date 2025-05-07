@@ -53,10 +53,10 @@
           <thead>
             <tr>
               <th data-th="name">Funcionário</th>
-              <th data-th="start">Início Expediente</th>
-              <th data-th="intervalStart">Início Intervalo</th>
-              <th data-th="intervalEnd">Fim Intervalo</th>
-              <th data-th="end">Fim Expediente</th>
+              <th data-th="start">Início</th>
+              <th data-th="runningtime">H/C</th>
+              <th data-th="end">Término</th>
+              <th data-th="overtime">Horas Extras</th>
             </tr>
           </thead>
           <tbody id="attendance-data"></tbody>
@@ -74,12 +74,12 @@
               <input type="text" title="O nome não pode ser alterado." id="editName" disabled />
               <label for="editStart">Início Expediente:</label>
               <input type="text" id="editStart" />
-              <label for="editIntervalStart">Início Intervalo:</label>
-              <input type="text" id="editIntervalStart" />
-              <label for="editIntervalEnd">Fim Intervalo:</label>
-              <input type="text" id="editIntervalEnd" />
-              <label for="editEnd">Fim Expediente:</label>
+              <label for="editRunningtime">Início Intervalo:</label>
+              <input type="text" id="editRunningtime" />
+              <label for="editEnd">Fim Intervalo:</label>
               <input type="text" id="editEnd" />
+              <label for="editOvertime">Fim Expediente:</label>
+              <input type="text" id="editOvertime" />
             </div>
 
             <div class="modal-footer">
@@ -96,18 +96,20 @@
               <h2>Adicionar Colaborador</h2>
               <span id="closeAddModal" class="close-button">&times;</span>
             </div>
+
             <div class="modal-body">
               <label for="addName">Nome:</label>
               <input type="text" id="addName" />
               <label for="addStart">Início Expediente:</label>
               <input type="text" id="addStart" />
-              <label for="addIntervalStart">Início Intervalo:</label>
-              <input type="text" id="addIntervalStart" />
-              <label for="addIntervalEnd">Fim Intervalo:</label>
-              <input type="text" id="addIntervalEnd" />
-              <label for="addEnd">Fim Expediente:</label>
+              <label for="addRunningtime">Início Intervalo:</label>
+              <input type="text" id="addRunningtime" />
+              <label for="addEnd">Fim Intervalo:</label>
               <input type="text" id="addEnd" />
+              <label for="addOvertime">Fim Expediente:</label>
+              <input type="text" id="addOvertime" />
             </div>
+
             <div class="modal-footer">
               <button id="cancelAdd" class="button-42 cancel">Cancelar</button>
               <button id="addEmployee" class="button-42 confirm">Adicionar</button>

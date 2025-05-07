@@ -15,13 +15,13 @@ const tableHeaders = document.querySelectorAll("th")
 const today = new Date().toISOString().split("T")[0]
 datepicker.value = today
 
-let timesRendered = 0
+let renderedTimesBySession = 0
 let editingIndex = null
 let currentDatabase = []
 let currentlySortedHeader = null
 let sortOrder = "ascending"
 const databaseLink =
-  "https://gist.githubusercontent.com/HugoAlbuquerque1993/468afa0fb1339b65a4c8ca82e7bb9e3d/raw/aa726e65097556519492e32266f6aadcd344abab/gistfile1.json"
+  "https://gist.githubusercontent.com/HugoAlbuquerque1993/468afa0fb1339b65a4c8ca82e7bb9e3d/raw/a94bdd4fd373fbb07e2eff32fe2a53dea6781e62/gistfile1.json"
 const SESSION_STORAGE_KEY = "sessionDatabase"
 
 function loadDatabase() {
@@ -119,14 +119,14 @@ function handleTableHeaderClick(event) {
 }
 
 function renderAttendanceData() {
-  timesRendered++
+  renderedTimesBySession++
   attendanceDataBody.innerHTML = ""
   currentDatabase.forEach((employee, index) => {
     const row = attendanceDataBody.insertRow()
     row.dataset.index = index
     row.addEventListener("click", () => openEditModal(index))
 
-    const cells = [employee.name, employee.start, employee.intervalStart, employee.intervalEnd, employee.end]
+    const cells = [employee.name, employee.start, employee.runningtime, employee.end, employee.overtime]
     cells.forEach((text) => {
       const cell = row.insertCell()
       cell.textContent = text
@@ -139,9 +139,9 @@ function openEditModal(index) {
   const employeeData = currentDatabase[index]
   document.getElementById("editName").value = employeeData.name
   document.getElementById("editStart").value = employeeData.start
-  document.getElementById("editIntervalStart").value = employeeData.intervalStart
-  document.getElementById("editIntervalEnd").value = employeeData.intervalEnd
+  document.getElementById("editRunningtime").value = employeeData.runningtime
   document.getElementById("editEnd").value = employeeData.end
+  document.getElementById("editOvertime").value = employeeData.overtime
   editModal.style.display = "block"
 }
 
@@ -153,16 +153,16 @@ function closeEditModal() {
 saveEditButton.addEventListener("click", () => {
   if (editingIndex !== null) {
     const newStart = document.getElementById("editStart").value
-    const newIntervalStart = document.getElementById("editIntervalStart").value
-    const newIntervalEnd = document.getElementById("editIntervalEnd").value
+    const newRunningtime = document.getElementById("editRunningtime").value
     const newEnd = document.getElementById("editEnd").value
+    const newOvertime = document.getElementById("editOvertime").value
 
     currentDatabase[editingIndex] = {
       ...currentDatabase[editingIndex],
       start: newStart,
-      intervalStart: newIntervalStart,
-      intervalEnd: newIntervalEnd,
+      runningtime: newRunningtime,
       end: newEnd,
+      overtime: newOvertime,
     }
 
     renderAttendanceData()
@@ -205,26 +205,26 @@ window.addEventListener("click", (event) => {
 addEmployeeButtonElement.addEventListener("click", () => {
   const newName = document.getElementById("addName").value
   const newStart = document.getElementById("addStart").value
-  const newIntervalStart = document.getElementById("addIntervalStart").value
-  const newIntervalEnd = document.getElementById("addIntervalEnd").value
+  const newRunningtime = document.getElementById("addRunningtime").value
   const newEnd = document.getElementById("addEnd").value
+  const newOvertime = document.getElementById("addOvertime").value
 
-  if (newName && newStart && newIntervalStart && newIntervalEnd && newEnd) {
+  if (newName && newStart && newRunningtime && newEnd && newOvertime) {
     currentDatabase.push({
       name: newName,
       start: newStart,
-      intervalStart: newIntervalStart,
-      intervalEnd: newIntervalEnd,
+      runningtime: newRunningtime,
       end: newEnd,
+      overtime: newOvertime,
     })
     closeAddModalFunc()
     renderAttendanceData()
 
     document.getElementById("addName").value = ""
     document.getElementById("addStart").value = ""
-    document.getElementById("addIntervalStart").value = ""
-    document.getElementById("addIntervalEnd").value = ""
+    document.getElementById("addRunningtime").value = ""
     document.getElementById("addEnd").value = ""
+    document.getElementById("addOvertime").value = ""
   } else {
     alert("Por favor, preencha todos os campos!")
   }
@@ -239,5 +239,4 @@ const sideMenuButton = document.getElementById("side-menu-button")
 sideMenuButton.addEventListener("click", () => {
   sideMenu[0].classList.toggle("hidden")
   sideMenu[0].children[0].classList.toggle("rotated")
-  console.log(sideMenu[0].children[0].classList)
 })
