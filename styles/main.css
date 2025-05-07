@@ -1,3 +1,5 @@
+@import url("popup.css");
+
 :root {
   --myDarkGray: #2b2b2b;
 }
@@ -207,12 +209,12 @@ tbody > tr:hover {
     border-radius: 8px;
     position: relative;
     box-shadow: 0 4px 8px #00000030;
-    animation-name: fadeIn;
+    animation-name: fadeTopToBottom;
     animation-duration: 0.8s;
   }
 }
 
-@keyframes fadeIn {
+@keyframes fadeTopToBottom {
   from {
     opacity: 0;
     transform: translateY(-50px);

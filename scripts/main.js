@@ -1,3 +1,8 @@
+import instacePopup from "./instancePopup.js"
+document.addEventListener("DOMContentLoaded", () => {
+  instacePopup(document)
+})
+
 const datepicker = document.getElementById("datepicker")
 const attendanceDataBody = document.getElementById("attendance-data")
 const editModal = document.getElementById("editModal")
@@ -125,6 +130,7 @@ function renderAttendanceData() {
     const row = attendanceDataBody.insertRow()
     row.dataset.index = index
     row.addEventListener("click", () => openEditModal(index))
+    employee.overtime = handleCalculateOvertime(employee)
 
     const cells = [employee.name, employee.start, employee.runningtime, employee.end, employee.overtime]
     cells.forEach((text) => {
@@ -132,6 +138,33 @@ function renderAttendanceData() {
       cell.textContent = text
     })
   })
+}
+
+function timeStringToMinutes(timeString) {
+  const [hours, minutes] = timeString.split(":").map(Number)
+  return hours * 60 + minutes
+}
+
+function formatTime(hours, minutes) {
+  const formattedHours = String(hours).padStart(2, "0")
+  const formattedMinutes = String(minutes).padStart(2, "0")
+  return `${formattedHours}:${formattedMinutes}`
+}
+
+function handleCalculateOvertime(employee) {
+  const startTimeInMinutes = timeStringToMinutes(employee.start)
+  const endTimeInMinutes = timeStringToMinutes(employee.end)
+
+  let differenceInMinutes = endTimeInMinutes - startTimeInMinutes
+
+  if (differenceInMinutes < 0) {
+    differenceInMinutes += 24 * 60
+  }
+
+  const differenceHours = Math.floor(differenceInMinutes / 60)
+  const differenceMinutes = differenceInMinutes % 60
+
+  return formatTime(differenceHours, differenceMinutes)
 }
 
 function openEditModal(index) {

@@ -4,8 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Registro de Ponto</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="stylesheet" href="styles/main.css" />
     <script src="https://kit.fontawesome.com/f5dd4dba75.js" crossorigin="anonymous"></script>
+    <script type="module" src="scripts/main.js" defer></script>
   </head>
   <body>
     <div class="container">
@@ -13,6 +15,11 @@
         <i id="side-menu-button" class="fa-solid fa-angle-left"></i>
         <h2><i class="fa-regular fa-comments"></i> Menu</h2>
         <ul>
+          <li>
+            <button id="showPopupButtonWithOptions">Mostrar Pop-up com Opções</button>
+            <button id="showPopupMessage">Mostrar Mensagem Pop-up</button>
+          </li>
+
           <li>
             <a href=""><i class="fa-solid fa-table-columns"></i>Dashboard</a>
           </li>
@@ -30,6 +37,13 @@
           </li>
         </ul>
       </nav>
+
+      <div id="popupContainer" class="fade-out">
+        <div id="customPopup">
+          <p id="popupText"></p>
+          <div id="popupButtons" class="popup-buttons"></div>
+        </div>
+      </div>
 
       <div class="register-container">
         <div class="config-bar">
@@ -118,6 +132,5 @@
         </div>
       </div>
     </div>
-    <script type="module" src="script.js"></script>
   </body>
 </html>
