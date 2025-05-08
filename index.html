@@ -15,26 +15,13 @@
         <i id="side-menu-button" class="fa-solid fa-angle-left"></i>
         <h2><i class="fa-regular fa-comments"></i> Menu</h2>
         <ul>
-          <li>
-            <button id="showPopupButtonWithOptions">Mostrar Pop-up com Opções</button>
-            <button id="showPopupMessage">Mostrar Mensagem Pop-up</button>
-          </li>
+          <li><i class="fa-solid fa-table-columns"></i>Dashboard</li>
 
-          <li>
-            <a href=""><i class="fa-solid fa-table-columns"></i>Dashboard</a>
-          </li>
+          <li id="showPopupButtonWithOptions"><i class="fa-solid fa-book"></i>Feedback</li>
 
-          <li>
-            <a href=""><i class="fa-solid fa-book"></i>Feedback</a>
-          </li>
+          <li id="showPopupMessage"><i class="fa-solid fa-square-poll-vertical"></i>Estatísticas</li>
 
-          <li>
-            <a href=""><i class="fa-solid fa-square-poll-vertical"></i>Estatísticas</a>
-          </li>
-
-          <li>
-            <a href=""><i class="fa-solid fa-flag-checkered"></i>Objetivos</a>
-          </li>
+          <li><i class="fa-solid fa-flag-checkered"></i>Objetivos</li>
         </ul>
       </nav>
 
@@ -48,15 +35,15 @@
       <div class="register-container">
         <div class="config-bar">
           <div class="config-bar-div">
-            <h2>Registro de Ponto</h2>
+            <h2>Dashboard: Registro de Ponto</h2>
           </div>
           <div class="config-bar-div">
             <input type="search" placeholder="Buscar por nome" name="" id="" />
 
             <div>
-              <button class="button-42" id="add-employee-button">Adicionar Colaborador</button>
-              <button class="button-42">Salvar Planilha</button>
-              <button class="button-42" id="">Imprimir</button>
+              <button class="myButton01" id="add-employee-button">Adicionar Colaborador</button>
+              <button class="myButton01">Salvar Planilha</button>
+              <button class="myButton01" id="">Imprimir</button>
             </div>
 
             <input type="date" id="datepicker" />
@@ -66,7 +53,7 @@
         <table id="attendance-table">
           <thead>
             <tr>
-              <th data-th="name">Funcionário</th>
+              <th data-th="name" class="linearBgAnimation">Funcionário</th>
               <th data-th="start">Início</th>
               <th data-th="runningtime">H/C</th>
               <th data-th="end">Término</th>
@@ -93,13 +80,13 @@
               <label for="editEnd">Fim Intervalo:</label>
               <input type="text" id="editEnd" />
               <label for="editOvertime">Fim Expediente:</label>
-              <input type="text" id="editOvertime" />
+              <input type="text" id="editOvertime" disabled />
             </div>
 
             <div class="modal-footer">
-              <button id="deleteUser" class="delete-button">Excluir</button>
-              <button id="cancelEdit" class="cancel-button">Cancelar</button>
-              <button id="saveEdit" class="save-button">Salvar</button>
+              <button id="deleteUser" class="myButton01 cancel">Excluir</button>
+              <button id="cancelEdit" class="myButton01 cancel">Cancelar</button>
+              <button id="saveEdit" class="myButton01 confirm">Salvar</button>
             </div>
           </div>
         </div>
@@ -121,12 +108,12 @@
               <label for="addEnd">Fim Intervalo:</label>
               <input type="text" id="addEnd" />
               <label for="addOvertime">Fim Expediente:</label>
-              <input type="text" id="addOvertime" />
+              <input type="text" id="addOvertime" disabled />
             </div>
 
             <div class="modal-footer">
-              <button id="cancelAdd" class="button-42 cancel">Cancelar</button>
-              <button id="addEmployee" class="button-42 confirm">Adicionar</button>
+              <button id="cancelAdd" class="myButton01 cancel">Cancelar</button>
+              <button id="addEmployee" class="myButton01 confirm">Adicionar</button>
             </div>
           </div>
         </div>

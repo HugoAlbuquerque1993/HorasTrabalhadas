@@ -1,1 +1,12 @@
-[{ "monday": "9" }, { "tuesday": "9" }, { "wednesday ": "9" }, { "thursday ": "9" }, { "friday ": "8" }]
+{
+  "breakTime": 60,
+  "hoursPerWorkday": {
+    "Sunday": 0,
+    "Monday": 9,
+    "Tuesday": 9,
+    "Wednesday": 9,
+    "Thursday": 9,
+    "Friday": 8,
+    "Saturday": 0
+  }
+}

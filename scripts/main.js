@@ -20,45 +20,80 @@ const tableHeaders = document.querySelectorAll("th")
 const today = new Date().toISOString().split("T")[0]
 datepicker.value = today
 
+const myEndpoints = {
+  sectorPath: "../database/sectorConfig.JSON",
+  databasePath: "../database/timeBank.JSON",
+  databaseLink:
+    "https://gist.githubusercontent.com/HugoAlbuquerque1993/468afa0fb1339b65a4c8ca82e7bb9e3d/raw/a94bdd4fd373fbb07e2eff32fe2a53dea6781e62/gistfile1.json",
+}
+
 let renderedTimesBySession = 0
 let editingIndex = null
-let currentDatabase = []
 let currentlySortedHeader = null
 let sortOrder = "ascending"
-const databaseLink =
-  "https://gist.githubusercontent.com/HugoAlbuquerque1993/468afa0fb1339b65a4c8ca82e7bb9e3d/raw/a94bdd4fd373fbb07e2eff32fe2a53dea6781e62/gistfile1.json"
+let sectorConfig = {}
+let timeBank = {}
+let employeesTimeBank = []
+let minutesRequirePerWorkday = 0
+
 const SESSION_STORAGE_KEY = "sessionDatabase"
 
-function loadDatabase() {
-  const sessionDatabase = sessionStorage.getItem(SESSION_STORAGE_KEY)
-  if (sessionDatabase) {
-    currentDatabase = JSON.parse(sessionDatabase)
-    console.log("Dados carregados do sessionStorage: ", currentDatabase)
-    renderAttendanceData()
-  } else {
-    fetch(databaseLink)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`Erro na requisição: ${response.status}`)
-        }
-        return response.json()
-      })
-      .then((data) => {
-        sessionStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(data))
-        console.log("Chamada HTTP realizada! Dados armazenados ao sessionStorage: ", data)
-        currentDatabase = data
-        renderAttendanceData()
-      })
-      .catch((error) => {
-        console.error("Erro ao carregar os dados:", error)
-      })
+const gettingStarted = async () => {
+  try {
+    sectorConfig = await loadPathfile(myEndpoints.sectorPath)
+    timeBank = await loadPathfile(myEndpoints.databasePath)
+
+    employeesTimeBank = timeBank.employees
+    minutesRequirePerWorkday = handleMinutesWorkay()
+
+    loadAttendanceData()
+  } catch (error) {
+    throw new Error(error)
   }
 }
 
-window.onload = loadDatabase
+window.onload = gettingStarted
+
+async function loadPathfile(url) {
+  let response = await fetch(url)
+
+  if (!response.ok) {
+    throw new Error("Request error: ", response.status)
+  }
+
+  let data = await response.json()
+  return data
+}
+
+// function loadDatabase() {
+//   const sessionDatabase = sessionStorage.getItem(SESSION_STORAGE_KEY)
+//   if (sessionDatabase) {
+//     employeesTimeBank = JSON.parse(sessionDatabase)
+//     console.log("Dados carregados do sessionStorage: ", employeesTimeBank)
+//     loadAttendanceData()
+//   } else {
+//     fetch(myEndpoints.databaseLink)
+//       .then((response) => {
+//         if (!response.ok) {
+//           throw new Error(`Erro na requisição: ${response.status}`)
+//         }
+//         return response.json()
+//       })
+//       .then((data) => {
+//         sessionStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(data))
+//         console.log("Chamada HTTP realizada! Dados armazenados ao sessionStorage: ", data)
+//         employeesTimeBank = data
+//         loadAttendanceData()
+//       })
+//       .catch((error) => {
+//         console.error("Erro ao carregar os dados:", error)
+//       })
+//   }
+// }
+// window.onload = loadDatabase
 
 function sortList(criterion = "start", order = "descending") {
-  const sortedList = [...currentDatabase]
+  const sortedList = [...employeesTimeBank]
   sortedList.sort((a, b) => {
     let valueA, valueB
 
@@ -91,7 +126,7 @@ function sortList(criterion = "start", order = "descending") {
       return 0
     }
   })
-  currentDatabase = sortedList
+  employeesTimeBank = sortedList
 }
 
 tableHeaders.forEach((header) => {
@@ -120,17 +155,19 @@ function handleTableHeaderClick(event) {
   header.classList.add(sortOrder === "ascending" ? "sorted-asc" : "sorted-desc")
 
   sortList(criterion, sortOrder)
-  renderAttendanceData()
+  loadAttendanceData()
 }
 
-function renderAttendanceData() {
+function loadAttendanceData() {
   renderedTimesBySession++
   attendanceDataBody.innerHTML = ""
-  currentDatabase.forEach((employee, index) => {
+  employeesTimeBank.forEach((employee, index) => {
     const row = attendanceDataBody.insertRow()
     row.dataset.index = index
     row.addEventListener("click", () => openEditModal(index))
     employee.overtime = handleCalculateOvertime(employee)
+
+    if (employee.warning) row.classList.add("warning")
 
     const cells = [employee.name, employee.start, employee.runningtime, employee.end, employee.overtime]
     cells.forEach((text) => {
@@ -151,15 +188,58 @@ function formatTime(hours, minutes) {
   return `${formattedHours}:${formattedMinutes}`
 }
 
+function identifyWeekDayString(dateString) {
+  const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+  const parts = dateString.split("/")
+  if (parts.length !== 3) {
+    return "Invalid date format"
+  }
+
+  const day = parseInt(parts[0], 10)
+  const month = parseInt(parts[1], 10) - 1
+  const year = parseInt(parts[2], 10)
+
+  const dateObject = new Date(year, month, day)
+
+  if (isNaN(dateObject)) {
+    return "Invalid date"
+  }
+
+  const dayOfWeekIndex = dateObject.getDay()
+  const thisWeekDayString = daysOfWeek[dayOfWeekIndex]
+  return thisWeekDayString
+}
+
+function handleMinutesWorkay() {
+  const thisWeekDayString = identifyWeekDayString(timeBank.storedDay)
+  const totalMinutes = sectorConfig.hoursPerWorkday[thisWeekDayString] * 60
+  return totalMinutes
+}
+
 function handleCalculateOvertime(employee) {
   const startTimeInMinutes = timeStringToMinutes(employee.start)
   const endTimeInMinutes = timeStringToMinutes(employee.end)
 
   let differenceInMinutes = endTimeInMinutes - startTimeInMinutes
 
+  let runningtime = employee.runningtime.toUpperCase()
+  if (employee.runningtime != runningtime) {
+    differenceInMinutes -= sectorConfig.breakTime
+  }
+
+  if (differenceInMinutes < minutesRequirePerWorkday) {
+    employee.warning = true
+    console.log(employee.name + " trabalhou quantidade de horas inferiores a jornada de trabalho diária.")
+    return "00:00"
+  } else {
+    employee.warning = null
+  }
+
   if (differenceInMinutes < 0) {
     differenceInMinutes += 24 * 60
   }
+
+  differenceInMinutes -= minutesRequirePerWorkday
 
   const differenceHours = Math.floor(differenceInMinutes / 60)
   const differenceMinutes = differenceInMinutes % 60
@@ -169,7 +249,7 @@ function handleCalculateOvertime(employee) {
 
 function openEditModal(index) {
   editingIndex = index
-  const employeeData = currentDatabase[index]
+  const employeeData = employeesTimeBank[index]
   document.getElementById("editName").value = employeeData.name
   document.getElementById("editStart").value = employeeData.start
   document.getElementById("editRunningtime").value = employeeData.runningtime
@@ -190,15 +270,15 @@ saveEditButton.addEventListener("click", () => {
     const newEnd = document.getElementById("editEnd").value
     const newOvertime = document.getElementById("editOvertime").value
 
-    currentDatabase[editingIndex] = {
-      ...currentDatabase[editingIndex],
+    employeesTimeBank[editingIndex] = {
+      ...employeesTimeBank[editingIndex],
       start: newStart,
       runningtime: newRunningtime,
       end: newEnd,
       overtime: newOvertime,
     }
 
-    renderAttendanceData()
+    loadAttendanceData()
     closeEditModal()
   }
 })
@@ -213,8 +293,8 @@ window.addEventListener("click", (event) => {
 
 deleteButton.addEventListener("click", () => {
   if (editingIndex !== null) {
-    currentDatabase.splice(editingIndex, 1)
-    renderAttendanceData()
+    employeesTimeBank.splice(editingIndex, 1)
+    loadAttendanceData()
     closeEditModal()
   }
 })
@@ -243,7 +323,7 @@ addEmployeeButtonElement.addEventListener("click", () => {
   const newOvertime = document.getElementById("addOvertime").value
 
   if (newName && newStart && newRunningtime && newEnd && newOvertime) {
-    currentDatabase.push({
+    employeesTimeBank.push({
       name: newName,
       start: newStart,
       runningtime: newRunningtime,
@@ -251,7 +331,7 @@ addEmployeeButtonElement.addEventListener("click", () => {
       overtime: newOvertime,
     })
     closeAddModalFunc()
-    renderAttendanceData()
+    loadAttendanceData()
 
     document.getElementById("addName").value = ""
     document.getElementById("addStart").value = ""

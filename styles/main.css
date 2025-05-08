@@ -1,4 +1,5 @@
 @import url("popup.css");
+@import url("myButtons.css");
 
 :root {
   --myDarkGray: #2b2b2b;
@@ -75,7 +76,7 @@ body {
     gap: 8px;
     margin: 16px;
 
-    a {
+    li {
       color: #fe9f9f;
       text-decoration: none;
       display: flex;
@@ -85,6 +86,7 @@ body {
       background-color: transparent;
       border-radius: 16px;
       border: 1px solid transparent;
+      cursor: pointer;
 
       &:hover {
         transition: 1s;
@@ -118,11 +120,6 @@ body {
     align-items: center;
     text-align: center;
     gap: 12px;
-
-    > div {
-      display: flex;
-      gap: 12px;
-    }
   }
 
   label {
@@ -166,6 +163,13 @@ th {
   font-weight: bold;
   cursor: pointer;
 }
+
+tr.warning {
+  > td:nth-child(4) {
+    background-color: red;
+  }
+}
+
 tbody tr:nth-child(even) {
   background-color: #1b1b1b;
 }
@@ -336,40 +340,18 @@ tbody > tr:hover {
 }
 th.sorted-asc,
 th.sorted-desc {
-  background-color: rgb(30, 0, 255);
+  background: linear-gradient(-45deg, #751b00, #000608, #2f0071);
+  background-size: 400% 400%;
+  animation: gradient 7s ease infinite;
 }
-
-.button-42 {
-  background-image: linear-gradient(to top, var(--myDarkGray), #340a00a1);
-  border-radius: 6px;
-  box-shadow: rgba(0, 0, 0, 0.1) 0 2px 4px;
-  color: #ffffff;
-  cursor: pointer;
-  display: inline-block;
-  font-family: Inter, -apple-system, system-ui, Roboto, "Helvetica Neue", Arial, sans-serif;
-  height: 40px;
-  line-height: 40px;
-  outline: 0;
-  overflow: hidden;
-  padding: 0 12px;
-  pointer-events: auto;
-  user-select: none;
-  -webkit-user-select: none;
-  vertical-align: top;
-  white-space: nowrap;
-  z-index: 9;
-  border: 0.5px solid transparent;
-  transition: 0.2s;
-
-  &.button-42:hover {
-    box-shadow: rgba(69, 255, 1, 0.299) 0px 2px 8px;
-    border: 0.5px solid white;
-    transform: translateY(-2px);
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
   }
-  &.confirm {
-    background-image: linear-gradient(to top, var(--myDarkGray), green);
+  50% {
+    background-position: 100% 50%;
   }
-  &.cancel {
-    background-image: linear-gradient(to top, var(--myDarkGray), red);
+  100% {
+    background-position: 0% 50%;
   }
 }

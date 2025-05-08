@@ -19,6 +19,11 @@
 }
 
 #customPopup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
   background-color: #292929;
   border: 1px solid #ccc;
   padding: 20px;
@@ -28,18 +33,16 @@
   text-align: center;
 }
 
-#popupText {
-  margin-bottom: 10px;
-}
-
 .popup-buttons {
   display: flex;
   gap: 10px;
   justify-content: center;
+  position: absolute;
+  bottom: -15px;
 }
 
 .popup-button {
-  padding: 8px 15px;
+  padding: 8px 12px;
   border: none;
   border-radius: 3px;
   cursor: pointer;

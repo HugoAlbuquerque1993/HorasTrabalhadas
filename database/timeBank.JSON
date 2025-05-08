@@ -1,15 +1,18 @@
-[
-  { "name": "João Silva", "start": "08:00", "runningtime": "S", "end": "17:00", "overtime": "" },
-  { "name": "Maria Oliveira", "start": "09:00", "runningtime": "N", "end": "18:00", "overtime": "" },
-  { "name": "Carlos Pereira", "start": "07:30", "runningtime": "N", "end": "16:30", "overtime": "" },
-  { "name": "Ana Souza", "start": "09:00", "runningtime": "S", "end": "19:30", "overtime": "" },
-  { "name": "Pedro Santos", "start": "08:30", "runningtime": "S", "end": "18:00", "overtime": "" },
-  { "name": "Mariana Costa", "start": "07:00", "runningtime": "N", "end": "17:00", "overtime": "" },
-  { "name": "Lucas Oliveira", "start": "10:00", "runningtime": "S", "end": "20:00", "overtime": "" },
-  { "name": "Fernanda Rodrigues", "start": "08:00", "runningtime": "N", "end": "16:00", "overtime": "" },
-  { "name": "Gabriel Almeida", "start": "09:30", "runningtime": "N", "end": "19:00", "overtime": "" },
-  { "name": "Beatriz Lima", "start": "07:30", "runningtime": "N", "end": "16:00", "overtime": "" },
-  { "name": "Rafael Cunha", "start": "10:00", "runningtime": "S", "end": "18:30", "overtime": "" },
-  { "name": "Isabela Fernandes", "start": "07:00", "runningtime": "S", "end": "15:00", "overtime": "" },
-  { "name": "Thiago Gomes", "start": "09:30", "runningtime": "S", "end": "17:30", "overtime": "" }
-]
+{
+  "storedDay": "08/05/2025",
+  "employees": [
+    { "name": "João Silva", "start": "08:00", "runningtime": "S", "end": "18:00", "overtime": "" },
+    { "name": "Maria Oliveira", "start": "09:00", "runningtime": "N", "end": "19:00", "overtime": "" },
+    { "name": "Carlos Pereira", "start": "07:30", "runningtime": "N", "end": "17:30", "overtime": "" },
+    { "name": "Ana Souza", "start": "09:00", "runningtime": "S", "end": "20:30", "overtime": "" },
+    { "name": "Pedro Santos", "start": "08:30", "runningtime": "S", "end": "19:00", "overtime": "" },
+    { "name": "Mariana Costa", "start": "07:00", "runningtime": "N", "end": "18:00", "overtime": "" },
+    { "name": "Lucas Oliveira", "start": "10:00", "runningtime": "S", "end": "21:00", "overtime": "" },
+    { "name": "Fernanda Rodrigues", "start": "08:00", "runningtime": "N", "end": "17:00", "overtime": "" },
+    { "name": "Gabriel Almeida", "start": "09:30", "runningtime": "N", "end": "20:00", "overtime": "" },
+    { "name": "Beatriz Lima", "start": "07:30", "runningtime": "N", "end": "17:00", "overtime": "" },
+    { "name": "Rafael Cunha", "start": "10:00", "runningtime": "S", "end": "19:30", "overtime": "" },
+    { "name": "Isabela Fernandes", "start": "07:00", "runningtime": "S", "end": "16:00", "overtime": "" },
+    { "name": "Thiago Gomes", "start": "09:30", "runningtime": "S", "end": "12:00", "overtime": "" }
+  ]
+}

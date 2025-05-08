@@ -2,10 +2,21 @@
  * @param {Document} document
  */
 
+class myPopup {
+  constructor(text, id, buttons = false) {
+    this.text = text
+    this.id = id
+    this.buttons = buttons
+    this.element = this.createElement()
+  }
+  createElement() {}
+}
+
 export default function instacePopup(document) {
   const popupContainer = document.getElementById("popupContainer")
   const popupText = document.getElementById("popupText")
   const popupButtonsContainer = document.getElementById("popupButtons")
+
   const showPopupButtonWithOptions = document.getElementById("showPopupButtonWithOptions")
   const showPopupMessage = document.getElementById("showPopupMessage")
   let popupTimeout
@@ -20,7 +31,7 @@ export default function instacePopup(document) {
       buttons.forEach((buttonData) => {
         const button = document.createElement("button")
         button.textContent = buttonData.text
-        button.className = `popup-button ${buttonData.class || ""}`
+        button.className = `myButton01 ${buttonData.class || ""}`
         button.addEventListener("click", () => {
           if (buttonData.action) {
             buttonData.action()
@@ -42,7 +53,7 @@ export default function instacePopup(document) {
         popupTimeout = setTimeout(() => {
           hideCustomPopup()
         }, 50)
-      }, 3000)
+      }, 4000)
     }
   }
 
@@ -63,13 +74,13 @@ export default function instacePopup(document) {
   }
 
   showPopupButtonWithOptions.addEventListener("click", () => {
-    showCustomPopup("Você tem certeza?", [
+    showCustomPopup("Deseja analisar o feedback diário?", [
       { text: "Não", class: "cancel", action: () => console.log("Cancelado!") },
       { text: "Sim", class: "confirm", action: () => console.log("Confirmado!") },
     ])
   })
 
   showPopupMessage.addEventListener("click", () => {
-    showCustomPopup("Ação realizada com sucesso!", [])
+    showCustomPopup("Funcionalidade para cálculo de estatística será adicionado em breve!", [])
   })
 }
