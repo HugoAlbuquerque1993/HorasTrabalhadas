@@ -21,8 +21,8 @@ const today = new Date().toISOString().split("T")[0]
 datepicker.value = today
 
 const myEndpoints = {
-  sectorPath: "../database/sectorConfig.JSON",
-  databasePath: "../database/timeBank.JSON",
+  sectorPath: "./database/sectorConfig.JSON",
+  databasePath: "./database/timeBank.JSON",
   databaseLink:
     "https://gist.githubusercontent.com/HugoAlbuquerque1993/468afa0fb1339b65a4c8ca82e7bb9e3d/raw/a94bdd4fd373fbb07e2eff32fe2a53dea6781e62/gistfile1.json",
 }
