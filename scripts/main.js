@@ -15,7 +15,7 @@ const closeAddModal = document.getElementById("closeAddModal")
 const cancelAddButton = document.getElementById("cancelAdd")
 const addEmployeeButtonElement = document.getElementById("addEmployee")
 const showAddModalButton = document.getElementById("add-employee-button")
-const tableHeaders = document.querySelectorAll("th")
+const tableHeaders = document.querySelectorAll("#attendance-table th")
 
 const today = new Date().toISOString().split("T")[0]
 datepicker.value = today
@@ -36,8 +36,6 @@ let timeBank = {}
 let employeesTimeBank = []
 let minutesRequirePerWorkday = 0
 
-const SESSION_STORAGE_KEY = "sessionDatabase"
-
 const gettingStarted = async () => {
   try {
     sectorConfig = await loadPathfile(myEndpoints.sectorPath)
@@ -48,8 +46,17 @@ const gettingStarted = async () => {
 
     loadAttendanceData()
   } catch (error) {
+    handleFetchError()
     throw new Error(error)
   }
+}
+
+function handleFetchError() {
+  const trError = attendanceDataBody.insertRow()
+  const tdError = trError.insertCell()
+  tdError.classList.add("tdError")
+  tdError.setAttribute("colspan", "5")
+  tdError.innerHTML = "Erro ao carregar banco de dados"
 }
 
 window.onload = gettingStarted
@@ -65,6 +72,7 @@ async function loadPathfile(url) {
   return data
 }
 
+// const SESSION_STORAGE_KEY = "sessionDatabase"
 // function loadDatabase() {
 //   const sessionDatabase = sessionStorage.getItem(SESSION_STORAGE_KEY)
 //   if (sessionDatabase) {
@@ -161,8 +169,10 @@ function handleTableHeaderClick(event) {
 function loadAttendanceData() {
   renderedTimesBySession++
   attendanceDataBody.innerHTML = ""
+
   employeesTimeBank.forEach((employee, index) => {
     const row = attendanceDataBody.insertRow()
+    row.classList.add("employeeRow")
     row.dataset.index = index
     row.addEventListener("click", () => openEditModal(index))
     employee.overtime = handleCalculateOvertime(employee)
