@@ -1,5 +1,6 @@
 {
   "breakTime": 60,
+  "standardWorkSchedule": [7, 0, 19, 30],
   "hoursPerWorkday": {
     "Sunday": 0,
     "Monday": 9,

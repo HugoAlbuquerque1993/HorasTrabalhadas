@@ -1,7 +1,4 @@
-import instacePopup from "./instancePopup.js"
-document.addEventListener("DOMContentLoaded", () => {
-  instacePopup(document)
-})
+import myPopup from "./instancePopup.js"
 
 const datepicker = document.getElementById("datepicker")
 const attendanceDataBody = document.getElementById("attendance-data")
@@ -16,6 +13,85 @@ const cancelAddButton = document.getElementById("cancelAdd")
 const addEmployeeButtonElement = document.getElementById("addEmployee")
 const showAddModalButton = document.getElementById("add-employee-button")
 const tableHeaders = document.querySelectorAll("#attendance-table th")
+const equalizeSchedule = document.getElementById("equalizeSchedule")
+
+function autocompleteTimeInputs() {
+  const popupWarnning =
+    "Esta ação trocará o horário de todos os colaboradores. Tem certeza que deseja continuar? OBS: Ação irreversível!"
+
+  let setStart = ""
+  let setEnd = ""
+  let setRunningtime = false
+
+  const config = {
+    hoursPerDay: 24,
+    minutesPerHour: 60,
+    caracterLimit: 2,
+    handleHours: "hours",
+    handleMinutes: "minutes",
+  }
+
+  function limitField(el) {
+    let input = el.target
+
+    if (input.type == "checkbox") {
+      setRunningtime = input.checked
+      return
+    }
+
+    if (input.value.length > 2) {
+      input.value = null
+    }
+
+    if (input.value > config.hoursPerDay && input.dataset.handletime == config.handleHours) {
+      input.value = config.hoursPerDay
+    }
+
+    if (input.value > config.minutesPerHour && input.dataset.handletime == "minutes") {
+      input.value = config.minutesPerHour
+    }
+  }
+
+  const inputs = equalizeSchedule.querySelectorAll("input")
+  inputs.forEach((input) => {
+    input.addEventListener("input", limitField)
+  })
+
+  sectorConfig.standardWorkSchedule.forEach((time, index) => {
+    inputs[index].value = time
+  })
+
+  const button = equalizeSchedule.querySelector("button")
+  button.addEventListener("click", () => {
+    let inputsValue = []
+    inputs.forEach((el) => {
+      inputsValue.push(el.value)
+    })
+
+    setStart = formatTime(inputsValue[0], inputsValue[1])
+    setEnd = formatTime(inputsValue[2], inputsValue[3])
+
+    myPopup(popupWarnning, true, equalizeScheduleAction)
+  })
+
+  function equalizeScheduleAction() {
+    sortList()
+
+    let newTimeBank = [...employeesTimeBank]
+    newTimeBank.forEach((employee) => {
+      employee.start = setStart
+      employee.end = setEnd
+      employee.runningtime = setRunningtime
+    })
+
+    employeesTimeBank = newTimeBank
+    loadAttendanceData()
+
+    setTimeout(() => {
+      myPopup("Horários alterados com sucesso!")
+    }, 1000)
+  }
+}
 
 const today = new Date().toISOString().split("T")[0]
 datepicker.value = today
@@ -35,6 +111,7 @@ let sectorConfig = {}
 let timeBank = {}
 let employeesTimeBank = []
 let minutesRequirePerWorkday = 0
+let popupButtons = {}
 
 const gettingStarted = async () => {
   try {
@@ -44,6 +121,7 @@ const gettingStarted = async () => {
     employeesTimeBank = timeBank.employees
     minutesRequirePerWorkday = handleMinutesWorkay()
 
+    autocompleteTimeInputs()
     loadAttendanceData()
   } catch (error) {
     handleFetchError()
@@ -156,7 +234,8 @@ function handleTableHeaderClick(event) {
     currentlySortedHeader.classList.remove("sorted-asc", "sorted-desc")
   }
 
-  sortOrder = currentlySortedHeader === header && sortOrder === "ascending" ? "descending" : "ascending"
+  sortOrder =
+    currentlySortedHeader === header && sortOrder === "ascending" ? "descending" : "ascending"
   currentlySortedHeader = header
   sortIcon.textContent = sortOrder === "ascending" ? "▼" : "▲"
   header.classList.remove("sorted-desc", "sorted-asc")
@@ -179,7 +258,14 @@ function loadAttendanceData() {
 
     if (employee.warning) row.classList.add("warning")
 
-    const cells = [employee.name, employee.start, employee.runningtime, employee.end, employee.overtime]
+    const cells = [
+      employee.name,
+      employee.start,
+      employee.runningtime,
+      employee.end,
+      employee.overtime,
+    ]
+
     cells.forEach((text) => {
       const cell = row.insertCell()
       cell.textContent = text
@@ -239,7 +325,6 @@ function handleCalculateOvertime(employee) {
 
   if (differenceInMinutes < minutesRequirePerWorkday) {
     employee.warning = true
-    console.log(employee.name + " trabalhou quantidade de horas inferiores a jornada de trabalho diária.")
     return "00:00"
   } else {
     employee.warning = null

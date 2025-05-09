@@ -4,13 +4,23 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Registro de Ponto</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
     <link rel="stylesheet" href="styles/main.css" />
     <script src="https://kit.fontawesome.com/f5dd4dba75.js" crossorigin="anonymous"></script>
     <script type="module" src="scripts/main.js" defer></script>
   </head>
   <body>
     <div class="container">
+      <div id="popupContainer" class="fade-out">
+        <div id="customPopup">
+          <p id="popupText"></p>
+          <div id="popupButtons" class="popup-buttons"></div>
+        </div>
+      </div>
+
       <nav class="side-menu">
         <i id="side-menu-button" class="fa-solid fa-angle-left"></i>
         <h2><i class="fa-regular fa-comments"></i> Menu</h2>
@@ -19,18 +29,13 @@
 
           <li id="showPopupButtonWithOptions"><i class="fa-solid fa-book"></i>Feedback</li>
 
-          <li id="showPopupMessage"><i class="fa-solid fa-square-poll-vertical"></i>Estatísticas</li>
+          <li id="showPopupMessage">
+            <i class="fa-solid fa-square-poll-vertical"></i>Estatísticas
+          </li>
 
           <li><i class="fa-solid fa-flag-checkered"></i>Objetivos</li>
         </ul>
       </nav>
-
-      <div id="popupContainer" class="fade-out">
-        <div id="customPopup">
-          <p id="popupText"></p>
-          <div id="popupButtons" class="popup-buttons"></div>
-        </div>
-      </div>
 
       <div class="register-container">
         <div class="config-bar">
@@ -38,8 +43,6 @@
             <h2>Dashboard: Registro de Ponto</h2>
           </div>
           <div class="config-bar-div">
-            <input type="search" placeholder="Buscar por nome" name="" id="" />
-
             <div>
               <button class="myButton01" id="add-employee-button">Adicionar Colaborador</button>
               <button class="myButton01">Salvar Planilha</button>
@@ -47,8 +50,31 @@
             </div>
 
             <input type="date" id="datepicker" />
+          </div>
 
-            <div><input type="number" name="" id="" /><input type="number" name="" id="" /></div>
+          <div class="config-bar-div">
+            <div class="equalizeSchedule" id="equalizeSchedule">
+              <div>
+                <p style="text-align: left; margin: 0">Atribuir mesmo horário a todos.</p>
+              </div>
+              <div>
+                Início:
+                <input type="number" data-handletime="hours" placeholder="H" /> :
+                <input type="number" data-handletime="minutes" placeholder="M" name="" />
+                Fim:
+                <input type="number" data-handletime="hours" placeholder="H" /> :
+                <input type="number" data-handletime="minutes" placeholder="M" name="" />
+                <div class="runningtime-check-div">
+                  <label for="runningtime-check">H/C?</label>
+                  <input type="checkbox" id="runningtime-check" />
+                </div>
+                <button class="myButton01">Atribuir</button>
+              </div>
+            </div>
+
+            <div class="search-bar-container">
+              <input type="search" placeholder="Buscar por nome" name="" id="" />
+            </div>
           </div>
         </div>
 

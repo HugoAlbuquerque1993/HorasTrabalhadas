@@ -1,86 +1,95 @@
-/**
- * @param {Document} document
- */
+class MyPopup {
+  constructor(texto, opcoes = {}) {
+    this.texto = texto || ""
+    this.id = opcoes.id || "myPopup-" + Date.now()
+    this.className = opcoes.className || "my-popup"
+    this.buttons = opcoes.buttons || []
+    this.popupElement = null
 
-class myPopup {
-  constructor(text, id, buttons = false) {
-    this.text = text
-    this.id = id
-    this.buttons = buttons
-    this.element = this.createElement()
+    this._createPopup()
+    this._adicionarAoBody()
   }
-  createElement() {}
 }
 
-export default function instacePopup(document) {
-  const popupContainer = document.getElementById("popupContainer")
-  const popupText = document.getElementById("popupText")
-  const popupButtonsContainer = document.getElementById("popupButtons")
+const popupContainer = document.getElementById("popupContainer")
+const popupText = document.getElementById("popupText")
+const popupButtonsContainer = document.getElementById("popupButtons")
 
-  const showPopupButtonWithOptions = document.getElementById("showPopupButtonWithOptions")
-  const showPopupMessage = document.getElementById("showPopupMessage")
-  let popupTimeout
+const showPopupMessage = document.getElementById("showPopupMessage")
+let popupTimeout
 
-  function showCustomPopup(text, buttons = []) {
-    clearTimeout(popupTimeout)
+export default async function showCustomPopup(text, showButtons = false, func = null) {
+  clearTimeout(popupTimeout)
+  let buttonReturn
 
-    popupText.textContent = text
-    popupButtonsContainer.innerHTML = ""
+  popupText.textContent = text
+  popupButtonsContainer.innerHTML = ""
 
-    if (buttons && buttons.length > 0) {
-      buttons.forEach((buttonData) => {
-        const button = document.createElement("button")
-        button.textContent = buttonData.text
-        button.className = `myButton01 ${buttonData.class || ""}`
-        button.addEventListener("click", () => {
-          if (buttonData.action) {
-            buttonData.action()
-          }
-          toogleFadeAnimation(popupContainer, "out")
-          hideCustomPopup()
-        })
-        popupButtonsContainer.appendChild(button)
-      })
-    }
+  if (showButtons == true) {
+    myButtonsList.forEach((buttonData) => {
+      const button = document.createElement("button")
+      button.textContent = buttonData.text
+      button.className = `myButton01 ${buttonData.className || ""}`
+      button.addEventListener("click", () => {
+        if (buttonData.text == "Sim") {
+          func()
+        }
 
-    popupContainer.style.visibility = "visible"
-    toogleFadeAnimation(popupContainer, "in")
-
-    if (buttons.length < 1) {
-      popupTimeout = setTimeout(() => {
         toogleFadeAnimation(popupContainer, "out")
-
-        popupTimeout = setTimeout(() => {
-          hideCustomPopup()
-        }, 50)
-      }, 4000)
-    }
+        hideCustomPopup()
+      })
+      popupButtonsContainer.appendChild(button)
+    })
   }
 
-  function toogleFadeAnimation(thisElement, action = "out") {
-    if (action == "in") {
-      popupContainer.classList.remove("fade-out")
-      popupContainer.classList.add("fade-in")
-    }
-    if (action == "out") {
-      popupContainer.classList.remove("fade-in")
-      popupContainer.classList.add("fade-out")
-    }
+  popupContainer.style.visibility = "visible"
+  toogleFadeAnimation(popupContainer, "in")
+
+  if (showButtons == false) {
+    popupTimeout = setTimeout(() => {
+      toogleFadeAnimation(popupContainer, "out")
+
+      popupTimeout = setTimeout(() => {
+        hideCustomPopup()
+      }, 50)
+    }, 4000)
   }
 
-  function hideCustomPopup() {
-    popupContainer.style.visibility = "hidden"
-    clearTimeout(popupTimeout)
-  }
-
-  showPopupButtonWithOptions.addEventListener("click", () => {
-    showCustomPopup("Deseja analisar o feedback diário?", [
-      { text: "Não", class: "cancel", action: () => console.log("Cancelado!") },
-      { text: "Sim", class: "confirm", action: () => console.log("Confirmado!") },
-    ])
-  })
-
-  showPopupMessage.addEventListener("click", () => {
-    showCustomPopup("Funcionalidade para cálculo de estatística será adicionado em breve!", [])
-  })
+  return buttonReturn
 }
+
+function toogleFadeAnimation(popupContainer, action = "out") {
+  if (action == "in") {
+    popupContainer.classList.remove("fade-out")
+    popupContainer.classList.add("fade-in")
+  } else {
+    popupContainer.classList.remove("fade-in")
+    popupContainer.classList.add("fade-out")
+  }
+}
+
+function hideCustomPopup() {
+  popupContainer.style.visibility = "hidden"
+  clearTimeout(popupTimeout)
+}
+
+const myButtonsList = [
+  {
+    text: "Não",
+    className: "cancel",
+    action: () => {
+      return false
+    },
+  },
+  {
+    text: "Sim",
+    className: "confirm",
+    action: () => {
+      return true
+    },
+  },
+]
+
+showPopupMessage.addEventListener("click", () => {
+  showCustomPopup("Funcionalidade para cálculo de estatística será adicionado em breve!", [])
+})
