@@ -5,6 +5,7 @@
   right: 20px;
   transition: 1s;
   transform: translateY(-20px);
+  visibility: hidden;
   opacity: 0;
   z-index: 1000;
 
