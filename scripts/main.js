@@ -21,7 +21,7 @@ function autocompleteTimeInputs() {
 
   let setStart = ""
   let setEnd = ""
-  let setRunningtime = false
+  let setRunningtime = "N"
 
   const config = {
     hoursPerDay: 24,
@@ -35,7 +35,7 @@ function autocompleteTimeInputs() {
     let input = el.target
 
     if (input.type == "checkbox") {
-      setRunningtime = input.checked
+      setRunningtime = input.checked ? "S" : "N"
       return
     }
 
@@ -89,7 +89,7 @@ function autocompleteTimeInputs() {
 
     setTimeout(() => {
       myPopup("Horários alterados com sucesso!")
-    }, 1000)
+    }, 500)
   }
 }
 
@@ -309,6 +309,7 @@ function identifyWeekDayString(dateString) {
 function handleMinutesWorkay() {
   const thisWeekDayString = identifyWeekDayString(timeBank.storedDay)
   const totalMinutes = sectorConfig.hoursPerWorkday[thisWeekDayString] * 60
+  console.log(totalMinutes)
   return totalMinutes
 }
 
@@ -319,16 +320,16 @@ function handleCalculateOvertime(employee) {
   let differenceInMinutes = endTimeInMinutes - startTimeInMinutes
 
   let runningtime = employee.runningtime.toUpperCase()
-  if (employee.runningtime != runningtime) {
+  if (runningtime != "S") {
     differenceInMinutes -= sectorConfig.breakTime
   }
 
   if (differenceInMinutes < minutesRequirePerWorkday) {
     employee.warning = true
     return "00:00"
-  } else {
-    employee.warning = null
   }
+
+  employee.warning = null
 
   if (differenceInMinutes < 0) {
     differenceInMinutes += 24 * 60
