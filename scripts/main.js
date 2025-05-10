@@ -14,6 +14,7 @@ const addEmployeeButtonElement = document.getElementById("addEmployee")
 const showAddModalButton = document.getElementById("add-employee-button")
 const tableHeaders = document.querySelectorAll("#attendance-table th")
 const equalizeSchedule = document.getElementById("equalizeSchedule")
+const printTableButton = document.getElementById("printTableButton")
 
 function autocompleteTimeInputs() {
   const popupWarnning =
@@ -309,7 +310,6 @@ function identifyWeekDayString(dateString) {
 function handleMinutesWorkay() {
   const thisWeekDayString = identifyWeekDayString(timeBank.storedDay)
   const totalMinutes = sectorConfig.hoursPerWorkday[thisWeekDayString] * 60
-  console.log(totalMinutes)
   return totalMinutes
 }
 
@@ -449,3 +449,21 @@ sideMenuButton.addEventListener("click", () => {
   sideMenu[0].classList.toggle("hidden")
   sideMenu[0].children[0].classList.toggle("rotated")
 })
+
+printTableButton.addEventListener("click", () => {
+  window.print()
+})
+
+// printTableButton.addEventListener("click", () => printContent("attendance-table"))
+
+// function printContent(elementId) {
+//   const contentElement = document.getElementById(elementId).innerHTML
+//   const janelaImpressao = window.open("", "", "width=600,height=600")
+//   janelaImpressao.document.open()
+//   janelaImpressao.document.write("<html><head><title>Imprimir Conteúdo</title></head><body>")
+//   janelaImpressao.document.write(contentElement)
+//   janelaImpressao.document.write("</body></html>")
+//   janelaImpressao.document.close()
+//   janelaImpressao.print()
+//   janelaImpressao.close()
+// }

@@ -74,7 +74,7 @@ body {
     list-style: none;
     padding: 0px;
     gap: 8px;
-    margin: 16px;
+    margin: 8px 16px;
 
     li {
       color: #fe9f9f;
@@ -103,87 +103,87 @@ body {
   max-height: 94dvh;
   overflow: auto;
   padding: 16px;
+}
 
-  .config-bar {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    background-color: var(--myDarkGray);
-    box-shadow: 0 0 10px #00000030;
-    padding: 16px;
-    border-radius: 8px;
-    border-radius: 16px;
-    transition: transform 1s;
-    min-width: 186px;
-  }
+.config-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background-color: var(--myDarkGray);
+  box-shadow: 0 0 10px #00000030;
+  padding: 16px;
+  border-radius: 8px;
+  border-radius: 16px;
+  transition: transform 1s;
+  min-width: 186px;
+}
 
-  .config-bar-div {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-    text-align: center;
-    gap: 12px;
-  }
+.config-bar-div {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  gap: 12px;
 
   h2 {
     margin: 0;
   }
+}
+
+label {
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.search-bar-container {
+  align-self: flex-end;
+}
+
+input[type="search"] {
+  background-color: var(--myDarkGray);
+  padding: 4px 8px;
+  border-radius: 8px;
+  min-width: 100px;
+  color: white;
+}
+
+input[type="date"] {
+  padding: 8px;
+  border: 1px solid #ccc;
+  width: 165px;
+  border-radius: 4px;
+  background-color: var(--myDarkGray);
+  color: white;
+}
+
+.equalizeSchedule {
+  display: flex;
+  flex-direction: column;
+}
+.equalizeSchedule input[type="number"] {
+  color: white;
+  width: 20px;
+  background-color: var(--myDarkGray);
+  border-radius: 4px;
+  text-align: center;
+}
+
+.equalizeSchedule input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.equalizeSchedule .runningtime-check-div {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 4px;
 
   label {
-    margin-right: 10px;
-    font-weight: bold;
-  }
-
-  .search-bar-container {
-    align-self: flex-end;
-  }
-
-  input[type="search"] {
-    background-color: var(--myDarkGray);
-    padding: 4px 8px;
-    border-radius: 8px;
-    min-width: 100px;
-    color: white;
-  }
-
-  input[type="date"] {
-    padding: 8px;
-    border: 1px solid #ccc;
-    width: 165px;
-    border-radius: 4px;
-    background-color: var(--myDarkGray);
-    color: white;
-  }
-
-  .equalizeSchedule {
-    display: flex;
-    flex-direction: column;
-  }
-  .equalizeSchedule input[type="number"] {
-    color: white;
-    width: 20px;
-    background-color: var(--myDarkGray);
-    border-radius: 4px;
-    text-align: center;
-  }
-
-  .equalizeSchedule input[type="number"]::-webkit-outer-spin-button,
-  input[type="number"]::-webkit-inner-spin-button {
-    -webkit-appearance: none;
     margin: 0;
-  }
-
-  .equalizeSchedule .runningtime-check-div {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    margin-left: 4px;
-
-    label {
-      margin: 0;
-    }
   }
 }
 
@@ -356,5 +356,23 @@ table {
   }
   100% {
     background-position: 0% 50%;
+  }
+}
+
+@media print {
+  .side-menu {
+    display: none;
+  }
+  .config-bar {
+    display: none;
+  }
+  table {
+    color: black;
+    border: 1px solid black;
+
+    td,
+    th {
+      border: 1px solid black;
+    }
   }
 }
