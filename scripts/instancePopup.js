@@ -15,7 +15,6 @@ const popupContainer = document.getElementById("popupContainer")
 const popupText = document.getElementById("popupText")
 const popupButtonsContainer = document.getElementById("popupButtons")
 
-const showPopupMessage = document.getElementById("showPopupMessage")
 let popupTimeout
 
 export default async function showCustomPopup(text, showButtons = false, func = null) {
@@ -29,7 +28,7 @@ export default async function showCustomPopup(text, showButtons = false, func = 
     myButtonsList.forEach((buttonData) => {
       const button = document.createElement("button")
       button.textContent = buttonData.text
-      button.className = `myButton01 ${buttonData.className || ""}`
+      button.className = `my-button ${buttonData.className || ""}`
       button.addEventListener("click", () => {
         if (buttonData.text == "Sim") {
           func()
@@ -89,7 +88,3 @@ const myButtonsList = [
     },
   },
 ]
-
-showPopupMessage.addEventListener("click", () => {
-  showCustomPopup("Funcionalidade para cálculo de estatística será adicionado em breve!", [])
-})

@@ -13,27 +13,84 @@
     <script type="module" src="scripts/main.js" defer></script>
   </head>
   <body>
-    <div class="container">
-      <div id="popupContainer" class="fade-out">
-        <div id="customPopup">
-          <p id="popupText"></p>
-          <div id="popupButtons" class="popup-buttons"></div>
+    <div id="popupContainer" class="fade-out">
+      <div id="customPopup">
+        <p id="popupText"></p>
+        <div id="popupButtons" class="popup-buttons"></div>
+      </div>
+    </div>
+
+    <div id="editModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Editar Ponto</h2>
+          <span id="closeModal" class="close-button">&times;</span>
+        </div>
+
+        <div class="modal-body">
+          <label for="editName">Funcionário:</label>
+          <input type="text" title="O nome não pode ser alterado." id="editName" disabled />
+          <label for="editStart">Início Expediente:</label>
+          <input type="text" id="editStart" />
+          <label for="editRunningtime">Início Intervalo:</label>
+          <input type="text" id="editRunningtime" />
+          <label for="editEnd">Fim Intervalo:</label>
+          <input type="text" id="editEnd" />
+          <label for="editOvertime">Fim Expediente:</label>
+          <input type="text" id="editOvertime" disabled />
+        </div>
+
+        <div class="modal-footer">
+          <button id="deleteUser" class="my-button cancel">Excluir</button>
+          <button id="cancelEdit" class="my-button cancel">Cancelar</button>
+          <button id="saveEdit" class="my-button confirm">Salvar</button>
         </div>
       </div>
+    </div>
 
+    <div id="addModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Adicionar Colaborador</h2>
+          <span id="closeAddModal" class="close-button">&times;</span>
+        </div>
+
+        <div class="modal-body">
+          <label for="addName">Nome:</label>
+          <input type="text" id="addName" />
+          <label for="addStart">Início Expediente:</label>
+          <input type="text" id="addStart" />
+          <label for="addRunningtime">Início Intervalo:</label>
+          <input type="text" id="addRunningtime" />
+          <label for="addEnd">Fim Intervalo:</label>
+          <input type="text" id="addEnd" />
+          <label for="addOvertime">Fim Expediente:</label>
+          <input type="text" id="addOvertime" disabled />
+        </div>
+
+        <div class="modal-footer">
+          <button id="cancelAdd" class="my-button cancel">Cancelar</button>
+          <button id="addEmployee" class="my-button confirm">Adicionar</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
       <nav class="side-menu">
         <i id="side-menu-button" class="fa-solid fa-angle-left"></i>
         <h2><i class="fa-regular fa-comments"></i> Menu</h2>
         <ul>
-          <li><i class="fa-solid fa-table-columns"></i>Dashboard</li>
-
-          <li id="showPopupButtonWithOptions"><i class="fa-solid fa-book"></i>Feedback</li>
-
-          <li id="showPopupMessage">
-            <i class="fa-solid fa-square-poll-vertical"></i>Estatísticas
+          <li class="toggleConfigWindow" data-showwindow="register-container">
+            <i class="fa-solid fa-table-columns"></i>Dashboard
           </li>
 
-          <li><i class="fa-solid fa-flag-checkered"></i>Objetivos</li>
+          <li class=""><i class="fa-solid fa-book"></i>Feedback</li>
+
+          <li class=""><i class="fa-solid fa-square-poll-vertical"></i>Estatísticas</li>
+
+          <li class="toggleConfigWindow" data-showwindow="config-menu">
+            <i class="fa-solid fa-gears"></i>Settings
+          </li>
         </ul>
       </nav>
 
@@ -44,16 +101,16 @@
           </div>
           <div class="config-bar-div">
             <div>
-              <button class="myButton01" id="add-employee-button">Adicionar Colaborador</button>
-              <button class="myButton01">Salvar Planilha</button>
-              <button class="myButton01" id="printTableButton">Imprimir</button>
+              <button class="my-button" id="add-employee-button">Adicionar Colaborador</button>
+              <button class="my-button">Salvar Planilha</button>
+              <button class="my-button" id="printTableButton">Imprimir</button>
             </div>
 
             <input type="date" id="datepicker" />
           </div>
 
           <div class="config-bar-div">
-            <div class="equalizeSchedule" id="equalizeSchedule">
+            <div class="equalize-schedule" id="equalize-schedule">
               <div>
                 <p style="text-align: left; margin: 0">Atribuir mesmo horário a todos.</p>
               </div>
@@ -68,7 +125,7 @@
                   <label for="runningtime-check">H/C?</label>
                   <input type="checkbox" id="runningtime-check" />
                 </div>
-                <button class="myButton01">Atribuir</button>
+                <button class="my-button">Atribuir</button>
               </div>
             </div>
 
@@ -90,60 +147,21 @@
           </thead>
           <tbody id="attendance-data"></tbody>
         </table>
+      </div>
 
-        <div id="editModal" class="modal">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h2>Editar Ponto</h2>
-              <span id="closeModal" class="close-button">&times;</span>
-            </div>
-
-            <div class="modal-body">
-              <label for="editName">Funcionário:</label>
-              <input type="text" title="O nome não pode ser alterado." id="editName" disabled />
-              <label for="editStart">Início Expediente:</label>
-              <input type="text" id="editStart" />
-              <label for="editRunningtime">Início Intervalo:</label>
-              <input type="text" id="editRunningtime" />
-              <label for="editEnd">Fim Intervalo:</label>
-              <input type="text" id="editEnd" />
-              <label for="editOvertime">Fim Expediente:</label>
-              <input type="text" id="editOvertime" disabled />
-            </div>
-
-            <div class="modal-footer">
-              <button id="deleteUser" class="myButton01 cancel">Excluir</button>
-              <button id="cancelEdit" class="myButton01 cancel">Cancelar</button>
-              <button id="saveEdit" class="myButton01 confirm">Salvar</button>
-            </div>
-          </div>
-        </div>
-
-        <div id="addModal" class="modal">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h2>Adicionar Colaborador</h2>
-              <span id="closeAddModal" class="close-button">&times;</span>
-            </div>
-
-            <div class="modal-body">
-              <label for="addName">Nome:</label>
-              <input type="text" id="addName" />
-              <label for="addStart">Início Expediente:</label>
-              <input type="text" id="addStart" />
-              <label for="addRunningtime">Início Intervalo:</label>
-              <input type="text" id="addRunningtime" />
-              <label for="addEnd">Fim Intervalo:</label>
-              <input type="text" id="addEnd" />
-              <label for="addOvertime">Fim Expediente:</label>
-              <input type="text" id="addOvertime" disabled />
-            </div>
-
-            <div class="modal-footer">
-              <button id="cancelAdd" class="myButton01 cancel">Cancelar</button>
-              <button id="addEmployee" class="myButton01 confirm">Adicionar</button>
-            </div>
-          </div>
+      <div class="config-menu hidden">
+        <div>
+          <h2>Janela de Configurações! (Implementação posterior)</h2>
+          <p>
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora, dicta nemo eius,
+            laboriosam, in nostrum eligendi minus aperiam reiciendis ex velit autem? Excepturi
+            cupiditate iure saepe aut adipisci corrupti maxime.
+          </p>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita, numquam placeat unde
+            asperiores nihil perferendis possimus tempora! Totam accusantium vitae soluta. Odio sint
+            vero excepturi doloremque rem enim ex adipisci?
+          </p>
         </div>
       </div>
     </div>

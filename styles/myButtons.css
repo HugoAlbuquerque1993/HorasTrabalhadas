@@ -1,4 +1,4 @@
-.myButton01 {
+.my-button {
   display: inline-block;
   background-image: linear-gradient(to top, var(--myDarkGray), #340a00a1);
   box-shadow: rgba(0, 0, 0, 0.1) 0 2px 4px;
@@ -15,7 +15,7 @@
   min-width: 80px;
   transition: 0.2s;
 
-  &.myButton01:hover {
+  &.my-button:hover {
     box-shadow: rgba(69, 255, 1, 0.299) 0px 2px 8px;
     border: 0.5px solid white;
     transform: translateY(-2px);

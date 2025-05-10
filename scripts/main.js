@@ -1,6 +1,5 @@
 import myPopup from "./instancePopup.js"
 
-const datepicker = document.getElementById("datepicker")
 const attendanceDataBody = document.getElementById("attendance-data")
 const editModal = document.getElementById("editModal")
 const closeModal = document.getElementById("closeModal")
@@ -13,8 +12,51 @@ const cancelAddButton = document.getElementById("cancelAdd")
 const addEmployeeButtonElement = document.getElementById("addEmployee")
 const showAddModalButton = document.getElementById("add-employee-button")
 const tableHeaders = document.querySelectorAll("#attendance-table th")
-const equalizeSchedule = document.getElementById("equalizeSchedule")
+const equalizeSchedule = document.getElementById("equalize-schedule")
 const printTableButton = document.getElementById("printTableButton")
+const datepicker = document.getElementById("datepicker")
+const toggleConfigWindow = document.querySelectorAll(".toggleConfigWindow")
+
+const today = new Date().toISOString().split("T")[0]
+datepicker.value = today
+
+const myEndpoints = {
+  sectorPath: "./database/sectorConfig.JSON",
+  databasePath: "./database/timeBank.JSON",
+  databaseLink:
+    "https://gist.githubusercontent.com/HugoAlbuquerque1993/468afa0fb1339b65a4c8ca82e7bb9e3d/raw/a94bdd4fd373fbb07e2eff32fe2a53dea6781e62/gistfile1.json",
+}
+
+let renderedTimesBySession = 0
+let editingIndex = null
+let currentlySortedHeader = null
+let sortOrder = "ascending"
+let sectorConfig = {}
+let timeBank = {}
+let employeesTimeBank = []
+let minutesRequirePerWorkday = 0
+
+toggleConfigWindow.forEach((listItem) => {
+  listItem.addEventListener("click", handleToggleWindow)
+})
+
+function handleToggleWindow(el) {
+  const allWindows = ["register-container", "config-menu"]
+  let showwindow = el.target.dataset.showwindow
+  console.log(showwindow)
+
+  allWindows.forEach((className) => {
+    let thisWindow = document.querySelector("." + className)
+
+    if (!thisWindow.classList.contains("hidden")) {
+      thisWindow.classList.add("hidden")
+    }
+
+    if (showwindow == className) {
+      thisWindow.classList.remove("hidden")
+    }
+  })
+}
 
 function autocompleteTimeInputs() {
   const popupWarnning =
@@ -93,26 +135,6 @@ function autocompleteTimeInputs() {
     }, 500)
   }
 }
-
-const today = new Date().toISOString().split("T")[0]
-datepicker.value = today
-
-const myEndpoints = {
-  sectorPath: "./database/sectorConfig.JSON",
-  databasePath: "./database/timeBank.JSON",
-  databaseLink:
-    "https://gist.githubusercontent.com/HugoAlbuquerque1993/468afa0fb1339b65a4c8ca82e7bb9e3d/raw/a94bdd4fd373fbb07e2eff32fe2a53dea6781e62/gistfile1.json",
-}
-
-let renderedTimesBySession = 0
-let editingIndex = null
-let currentlySortedHeader = null
-let sortOrder = "ascending"
-let sectorConfig = {}
-let timeBank = {}
-let employeesTimeBank = []
-let minutesRequirePerWorkday = 0
-let popupButtons = {}
 
 const gettingStarted = async () => {
   try {
@@ -453,17 +475,3 @@ sideMenuButton.addEventListener("click", () => {
 printTableButton.addEventListener("click", () => {
   window.print()
 })
-
-// printTableButton.addEventListener("click", () => printContent("attendance-table"))
-
-// function printContent(elementId) {
-//   const contentElement = document.getElementById(elementId).innerHTML
-//   const janelaImpressao = window.open("", "", "width=600,height=600")
-//   janelaImpressao.document.open()
-//   janelaImpressao.document.write("<html><head><title>Imprimir Conteúdo</title></head><body>")
-//   janelaImpressao.document.write(contentElement)
-//   janelaImpressao.document.write("</body></html>")
-//   janelaImpressao.document.close()
-//   janelaImpressao.print()
-//   janelaImpressao.close()
-// }

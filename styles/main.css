@@ -1,5 +1,6 @@
 @import url("popup.css");
 @import url("myButtons.css");
+@import url("configMenu.css");
 
 :root {
   --myDarkGray: #2b2b2b;
@@ -158,11 +159,11 @@ input[type="date"] {
   color: white;
 }
 
-.equalizeSchedule {
+.equalize-schedule {
   display: flex;
   flex-direction: column;
 }
-.equalizeSchedule input[type="number"] {
+.equalize-schedule input[type="number"] {
   color: white;
   width: 20px;
   background-color: var(--myDarkGray);
@@ -170,13 +171,13 @@ input[type="date"] {
   text-align: center;
 }
 
-.equalizeSchedule input[type="number"]::-webkit-outer-spin-button,
+.equalize-schedule input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
 
-.equalizeSchedule .runningtime-check-div {
+.equalize-schedule .runningtime-check-div {
   display: inline-flex;
   justify-content: center;
   align-items: center;
@@ -378,4 +379,8 @@ table {
   #popupContainer {
     display: none;
   }
+}
+
+.hidden {
+  display: none;
 }
