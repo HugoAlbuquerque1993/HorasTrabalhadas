@@ -440,7 +440,7 @@ addEmployeeButtonElement.addEventListener("click", () => {
   const newEnd = document.getElementById("addEnd").value
   const newOvertime = document.getElementById("addOvertime").value
 
-  if (newName && newStart && newRunningtime && newEnd && newOvertime) {
+  if (newName && newStart && newRunningtime && newEnd) {
     employeesTimeBank.push({
       name: newName,
       start: newStart,
