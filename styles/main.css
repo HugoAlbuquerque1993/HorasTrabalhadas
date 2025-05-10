@@ -36,7 +36,7 @@ body {
   flex-direction: column;
   transition: 0.3s;
 
-  &.hidden {
+  &.hidden-menu {
     transform: translateX(-140px);
     position: fixed;
   }

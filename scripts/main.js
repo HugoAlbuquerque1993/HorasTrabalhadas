@@ -468,7 +468,7 @@ datepicker.addEventListener("change", (event) => {
 const sideMenu = document.getElementsByClassName("side-menu")
 const sideMenuButton = document.getElementById("side-menu-button")
 sideMenuButton.addEventListener("click", () => {
-  sideMenu[0].classList.toggle("hidden")
+  sideMenu[0].classList.toggle("hidden-menu")
   sideMenu[0].children[0].classList.toggle("rotated")
 })
 
