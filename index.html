@@ -78,20 +78,23 @@
     <div class="container">
       <nav class="side-menu">
         <i id="side-menu-button" class="fa-solid fa-angle-left"></i>
-        <h2><i class="fa-regular fa-comments"></i> Menu</h2>
-        <ul>
-          <li class="toggleConfigWindow" data-showwindow="register-container">
-            <i class="fa-solid fa-table-columns"></i>Dashboard
-          </li>
 
-          <li class=""><i class="fa-solid fa-book"></i>Feedback</li>
+        <div>
+          <div>
+            <h2><i class="fa-regular fa-comments"></i> Menu</h2>
+          </div>
 
-          <li class=""><i class="fa-solid fa-square-poll-vertical"></i>Estatísticas</li>
-
-          <li class="toggleConfigWindow" data-showwindow="config-menu">
-            <i class="fa-solid fa-gears"></i>Settings
-          </li>
-        </ul>
+          <ul>
+            <li class="toggleConfigWindow" data-showwindow="register-container">
+              <i class="fa-solid fa-table-columns"></i>Dashboard
+            </li>
+            <li class=""><i class="fa-solid fa-book"></i>Feedback</li>
+            <li class=""><i class="fa-solid fa-square-poll-vertical"></i>Estatísticas</li>
+            <li class="toggleConfigWindow" data-showwindow="config-menu">
+              <i class="fa-solid fa-gears"></i>Settings
+            </li>
+          </ul>
+        </div>
       </nav>
 
       <div class="register-container">
@@ -99,6 +102,7 @@
           <div class="config-bar-div">
             <h2>Dashboard: Registro de Ponto</h2>
           </div>
+
           <div class="config-bar-div">
             <div>
               <button class="my-button" id="add-employee-button">Adicionar Colaborador</button>
@@ -106,7 +110,7 @@
               <button class="my-button" id="printTableButton">Imprimir</button>
             </div>
 
-            <input type="date" id="datepicker" />
+            <div><input type="date" id="datepicker" /></div>
           </div>
 
           <div class="config-bar-div">
@@ -138,7 +142,7 @@
         <table id="attendance-table">
           <thead>
             <tr>
-              <th data-th="name" class="linearBgAnimation">Funcionário</th>
+              <th data-th="name" class="linearBgAnimation">Nome</th>
               <th data-th="start">Início</th>
               <th data-th="runningtime">H/C</th>
               <th data-th="end">Término</th>

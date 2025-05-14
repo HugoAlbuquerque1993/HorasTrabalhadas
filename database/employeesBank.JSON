@@ -1,0 +1,69 @@
+{
+  "employees": [
+    {
+      "_id": "15435",
+      "name": "João Silva",
+      "admin": false
+    },
+    {
+      "_id": "67890",
+      "name": "Maria Oliveira",
+      "admin": false
+    },
+    {
+      "_id": "13579",
+      "name": "Carlos Pereira",
+      "admin": false
+    },
+    {
+      "_id": "02468",
+      "name": "Ana Souza",
+      "admin": false
+    },
+    {
+      "_id": "98765",
+      "name": "Pedro Santos",
+      "admin": false
+    },
+    {
+      "_id": "54321",
+      "name": "Mariana Costa",
+      "admin": false
+    },
+    {
+      "_id": "39465",
+      "name": "Lucas Oliveira",
+      "admin": false
+    },
+    {
+      "_id": "33445",
+      "name": "Fernanda Rodrigues",
+      "admin": false
+    },
+    {
+      "_id": "66778",
+      "name": "Gabriel Almeida",
+      "admin": false
+    },
+    {
+      "_id": "99001",
+      "name": "Beatriz Lima",
+      "admin": false
+    },
+    {
+      "_id": "22334",
+      "name": "Rafael Cunha",
+      "admin": false
+    },
+    {
+      "_id": "55667",
+      "name": "Isabela Fernandes",
+      "admin": false
+    },
+    {
+      "_id": "88990",
+      "name": "Thiago Gomes",
+      "admin": false
+    }
+  ]
+}

@@ -138,6 +138,8 @@ function autocompleteTimeInputs() {
 
 const gettingStarted = async () => {
   try {
+    widthVerify()
+
     sectorConfig = await loadPathfile(myEndpoints.sectorPath)
     timeBank = await loadPathfile(myEndpoints.databasePath)
 
@@ -467,10 +469,20 @@ datepicker.addEventListener("change", (event) => {
 
 const sideMenu = document.getElementsByClassName("side-menu")
 const sideMenuButton = document.getElementById("side-menu-button")
-sideMenuButton.addEventListener("click", () => {
+sideMenuButton.addEventListener("click", toogleSideMenePosition)
+
+function toogleSideMenePosition() {
   sideMenu[0].classList.toggle("hidden-menu")
   sideMenu[0].children[0].classList.toggle("rotated")
-})
+}
+
+function widthVerify() {
+  if (window.innerWidth < 500 && !sideMenu[0].classList.contains("hidden-menu")) {
+    toogleSideMenePosition()
+  }
+}
+
+window.addEventListener("resize", widthVerify)
 
 printTableButton.addEventListener("click", () => {
   window.print()

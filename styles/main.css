@@ -4,6 +4,7 @@
 
 :root {
   --myDarkGray: #2b2b2b;
+  --sideMenuWidth: 160px;
 }
 *::-webkit-scrollbar {
   display: none;
@@ -26,19 +27,30 @@ body {
 }
 
 .side-menu {
+  display: flex;
   background-color: var(--myDarkGray);
-  width: 150px;
+  min-width: var(--sideMenuWidth);
+  max-width: var(--sideMenuWidth);
   position: relative;
   height: 100dvh;
-  z-index: 10;
   font-size: 0.9rem;
-  display: flex;
   flex-direction: column;
-  transition: 0.3s;
+  transition: 0.3s ease;
+  z-index: 10;
 
   &.hidden-menu {
-    transform: translateX(-140px);
-    position: fixed;
+    min-width: 15px;
+    max-width: 15px;
+  }
+
+  > div {
+    overflow: hidden;
+  }
+
+  h2 {
+    display: flex;
+    justify-content: center;
+    width: var(--sideMenuWidth);
   }
 
   > i {
@@ -110,13 +122,13 @@ body {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  min-width: 220px;
   background-color: var(--myDarkGray);
   box-shadow: 0 0 10px #00000030;
   padding: 16px;
   border-radius: 8px;
   border-radius: 16px;
   transition: transform 1s;
-  min-width: 186px;
 }
 
 .config-bar-div {
@@ -383,4 +395,37 @@ table {
 
 .hidden {
   display: none;
+}
+
+@media (max-width: 500px) {
+  body {
+    font-size: 0.7rem;
+  }
+  .side-menu {
+    position: absolute;
+    border: 1px solid white;
+
+    &.hidden-menu {
+      border: 0px solid white;
+      background-color: var(--myDarkGray);
+      min-width: 10px;
+      max-width: 10px;
+    }
+  }
+  .config-bar-div {
+    h2 {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+    > div {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      width: 100%;
+      gap: 4px;
+    }
+  }
 }
