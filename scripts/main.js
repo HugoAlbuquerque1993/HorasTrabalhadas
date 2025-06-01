@@ -15,7 +15,7 @@ const tableHeaders = document.querySelectorAll("#attendance-table th")
 const equalizeSchedule = document.getElementById("equalize-schedule")
 const printTableButton = document.getElementById("printTableButton")
 const datepicker = document.getElementById("datepicker")
-const toggleConfigWindow = document.querySelectorAll(".toggleConfigWindow")
+const configWindowList = document.querySelectorAll(".config-window-list")
 
 const today = new Date().toISOString().split("T")[0]
 datepicker.value = today
@@ -23,8 +23,6 @@ datepicker.value = today
 const myEndpoints = {
   sectorPath: "./database/sectorConfig.JSON",
   databasePath: "./database/timeBank.JSON",
-  databaseLink:
-    "https://gist.githubusercontent.com/HugoAlbuquerque1993/468afa0fb1339b65a4c8ca82e7bb9e3d/raw/a94bdd4fd373fbb07e2eff32fe2a53dea6781e62/gistfile1.json",
 }
 
 let renderedTimesBySession = 0
@@ -36,16 +34,16 @@ let timeBank = {}
 let employeesTimeBank = []
 let minutesRequirePerWorkday = 0
 
-toggleConfigWindow.forEach((listItem) => {
+configWindowList.forEach((listItem) => {
   listItem.addEventListener("click", handleToggleWindow)
 })
 
 function handleToggleWindow(el) {
-  const allWindows = ["register-container", "config-menu"]
+  const windowsClassnames = ["register-container", "config-menu"]
   let showwindow = el.target.dataset.showwindow
   console.log(showwindow)
 
-  allWindows.forEach((className) => {
+  windowsClassnames.forEach((className) => {
     let thisWindow = document.querySelector("." + className)
 
     if (!thisWindow.classList.contains("hidden")) {
@@ -487,3 +485,15 @@ window.addEventListener("resize", widthVerify)
 printTableButton.addEventListener("click", () => {
   window.print()
 })
+
+//delete
+function firstWindow(element) {
+  const eventoDeClique = new MouseEvent("click", {
+    bubbles: true,
+    cancelable: true,
+  })
+
+  element.dispatchEvent(eventoDeClique)
+}
+firstWindow(configWindowList[1])
+//delete
